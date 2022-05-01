@@ -11,6 +11,7 @@ const Navbar = () => {
             width={100}
             height={30}
             className="object-contain cursor-pointer"
+            alt="logo"
           />
         </div>
 
@@ -35,7 +36,7 @@ const Navbar = () => {
 
           <div className="relative link flex items-center">
             <span className="absolute top-0 right-0 md:right-10 h-4 w-4 bg-yellow-400 text-center rounded-full text-black font-bold">2</span>
-            <ShoppingCartIcon className="h-10" />
+            <ShoppingCartIcon className="h-8" />
             <p className="hidden md:inline font-bold md:text-sm mt-2">Basket</p>
           </div>
         </div>

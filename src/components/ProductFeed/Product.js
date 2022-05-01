@@ -14,11 +14,12 @@ const Product = ({ id, title, price, description, category, image }) => {
   const [hasPrime, setHasPrime] = useState(Math.random() < 0.5)
 
   return (
-    <div className='relative flex flex-col m-5 bg-white z-30 p-10'>
+    <div className='relative flex justify-center flex-col m-5 bg-white z-30 p-10'>
       <p className='absolute top-2 right-2 text-xs italic text-gray-400'>{category}</p>
       <img
-        src={image} height={200} width={200}
-        className="object-contain"
+        src={image}
+        className="object-contain h-52 w-52 mx-auto"
+        alt=""
       />
       <h4 className='my-3 '>{title}</h4>
       <div className='flex'>
@@ -40,7 +41,7 @@ const Product = ({ id, title, price, description, category, image }) => {
         <div className='flex items-center space-x-2 -mt-5'>
           <img
             src="https://whitebox.com/wp-content/uploads/2020/05/Prime-tag-.png"
-            alt="prime-image"
+            alt="prime"
             className='w-12'
           />
           <p className='text-xs text-gray-500'>FREE Next-day Delivery</p>

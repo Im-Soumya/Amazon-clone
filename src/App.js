@@ -13,7 +13,6 @@ function App() {
         .then(res => res.json())
         .then(res => {
           setProducts(res)
-          console.log(res)
         })
     }
     getProducts()
