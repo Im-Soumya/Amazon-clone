@@ -1,8 +1,10 @@
 import './App.css';
 import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from './components/Home/Home';
 import ProductFeed from './components/ProductFeed/ProductFeed';
+import Checkout from "./components/Checkout/Checkout";
 
 function App() {
   const [products, setProducts] = useState([])
@@ -14,16 +16,24 @@ function App() {
         .then(res => {
           setProducts(res)
         })
+        .catch(e => console.log(e.message))
     }
     getProducts()
   }, [])
   return (
     <div className='bg-gray-100'>
-      <Navbar />
-      <Home />
-      <ProductFeed products={products} />
+      <Router>
+        <Routes>
+          <Route path="/" element={<><Navbar /><Home /><ProductFeed /></>} />
+          <Route path="/checkout" element={<><Navbar /><Checkout /></>} />
+        </Routes>
+      </Router>
     </div>
   );
 }
 
 export default App;
+
+{/* <Navbar />
+      <Home />
+      <ProductFeed products={products} /> */}

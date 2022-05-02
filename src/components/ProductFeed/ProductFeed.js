@@ -17,7 +17,7 @@ const ProductFeed = ({ products }) => {
       ))}
 
       <img 
-        className='md:col-span-full'
+        className='md:col-span-full mx-auto'
         src="https://images-eu.ssl-images-amazon.com/images/G/02/SBP/2018/gateway/1110572_smb_gw_desktop_1500x300_lavolio_1x_uk._CB484123630_.jpg"
         alt=""
       />
