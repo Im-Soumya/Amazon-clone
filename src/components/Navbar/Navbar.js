@@ -4,7 +4,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signO
 import { provider } from "../../firebase";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectItems } from "../../features/basketSlice";
+import { selectItems } from "../../redux/basketSlice";
 
 const Navbar = () => {
   const [userName, setUserName] = useState("")
@@ -38,7 +38,7 @@ const Navbar = () => {
   }
 
   return (
-    <header>
+    <header className="sticky top-0 z-50">
       <div className="flex items-center bg-amazon_blue flex-grow p-1 py-2">
         <div className="mt-2 flex items-center flex-grow mx-2 sm:flex-grow-0">
           <Link to="/">

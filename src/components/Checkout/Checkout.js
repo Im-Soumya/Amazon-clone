@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { selectItems, selectTotal } from '../../features/basketSlice';
+import { selectItems, selectTotal } from '../../redux/basketSlice';
 import CheckoutProduct from "../Checkout/CheckoutProduct";
 import Currency from "react-currency-formatter";
 

@@ -2,7 +2,7 @@ import { StarIcon } from '@heroicons/react/solid';
 import React from 'react';
 import Currency from "react-currency-formatter";
 import { useDispatch } from 'react-redux';
-import { addToBasket, removeFromBasket } from '../../features/basketSlice';
+import { addToBasket, removeFromBasket } from '../../redux/basketSlice';
 
 const CheckoutProduct = ({ id, title, price, description, category, rating, image, hasPrime }) => {
 
