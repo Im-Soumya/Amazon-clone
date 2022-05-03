@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { MenuIcon, SearchIcon, ShoppingCartIcon } from "@heroicons/react/outline";
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "firebase/auth";
-import { provider } from "../firebase";
+import { provider } from "../../firebase";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectItems } from "../../features/basketSlice";
 
 const Navbar = () => {
   const [userName, setUserName] = useState("")
+
+  const items = useSelector(selectItems)
 
   const auth = getAuth();
 
@@ -72,7 +76,7 @@ const Navbar = () => {
 
           <Link to="/checkout">
             <div className="relative link flex items-center">
-              <span className="absolute top-0 right-0 md:right-10 h-4 w-4 bg-yellow-400 text-center rounded-full text-black font-bold">2</span>
+              <span className="absolute top-0 right-0 md:right-10 h-4 w-4 bg-yellow-400 text-center rounded-full text-black font-bold">{items.length}</span>
               <ShoppingCartIcon className="h-8" />
               <p className="hidden md:inline font-bold md:text-sm mt-2">Basket</p>
             </div>

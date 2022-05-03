@@ -1,6 +1,15 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { selectItems, selectTotal } from '../../features/basketSlice';
+import CheckoutProduct from "../Checkout/CheckoutProduct";
+import Currency from "react-currency-formatter";
 
 const Checkout = () => {
+
+  const items = useSelector(selectItems);
+
+  const total = useSelector(selectTotal);
+
   return (
     <main className='lg:flex max-w-screen-2xl mx-auto'>
       <div className='flex-grow m-5 shadow-sm'>
@@ -11,8 +20,39 @@ const Checkout = () => {
         />
 
         <div className='flex flex-col p-5 space-y-10 bg-white'>
-          <h1 className='text-3xl border-b pb-4'>Your Shopping Basket</h1>
+          <h1 className='text-3xl border-b pb-4'>
+            {items.length === 0 ? "Your basket looks empty." : "Your shopping basket:"}
+          </h1>
+
+          {items.map((item, i) => (
+            <CheckoutProduct
+              key={i}
+              id={item.id}
+              title={item.title}
+              price={item.price}
+              description={item.description}
+              category={item.category}
+              rating={item.rating}
+              image={item.image}
+              hasPrime={item.hasPrime}
+            />
+          ))}
         </div>
+      </div>
+
+      <div className='flex flex-col bg-white p-10 m-5 shadow-md'>
+        {items.length > 0 && (
+          <>
+            <h2 className='whitespace-nowrap flex justify-between mx-1'>Subtotal ({items.length} items):
+              <span className='font-bold ml-3'>
+                <Currency quantity={total} currency="INR" />
+              </span>
+            </h2>
+            <button className="button mt-5">
+              Proceed to checkout
+            </button>
+          </>
+        )}
       </div>
     </main>
   )
