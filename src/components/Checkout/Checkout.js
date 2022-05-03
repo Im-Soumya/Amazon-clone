@@ -40,20 +40,18 @@ const Checkout = () => {
         </div>
       </div>
 
-      <div className='flex flex-col bg-white p-10 m-5 shadow-md'>
-        {items.length > 0 && (
-          <>
-            <h2 className='whitespace-nowrap flex justify-between mx-1'>Subtotal ({items.length} items):
-              <span className='font-bold ml-3'>
-                <Currency quantity={total} currency="INR" />
-              </span>
-            </h2>
-            <button className="button mt-5">
-              Proceed to checkout
-            </button>
-          </>
-        )}
-      </div>
+      {items.length !== 0 && (
+        <div className='flex flex-col bg-white p-10 m-5 shadow-md'>
+          <h2 className='whitespace-nowrap flex justify-between mx-1'>Subtotal ({items.length} items):
+            <span className='font-bold ml-3'>
+              <Currency quantity={total} currency="INR" />
+            </span>
+          </h2>
+          <button className="button mt-5">
+            Proceed to checkout
+          </button>
+        </div>
+      )}
     </main>
   )
 }
