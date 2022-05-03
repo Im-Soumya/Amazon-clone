@@ -1,9 +1,9 @@
-#Amazon Clone with ReactJs
+# Amazon Clone with ReactJs
 Link to the website:  react-amazon-clone-pink.vercel.app 
 
 ![Amazon clone](https://user-images.githubusercontent.com/91958667/166470056-112aae56-0b9e-451e-b9cb-f37286079e32.JPG)
 
-##Resources used:
+## Resources used:
  * Redux
  * Tailwind CSS
  * Firebase
