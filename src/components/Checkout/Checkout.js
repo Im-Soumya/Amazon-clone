@@ -3,11 +3,14 @@ import { useSelector } from 'react-redux';
 import { selectItems, selectTotal } from '../../redux/basketSlice';
 import CheckoutProduct from "../Checkout/CheckoutProduct";
 import Currency from "react-currency-formatter";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
 
-  const items = useSelector(selectItems);
+  const navigate = useNavigate()
 
+  const items = useSelector(selectItems);
   const total = useSelector(selectTotal);
 
   return (
@@ -47,7 +50,10 @@ const Checkout = () => {
               <Currency quantity={total} currency="INR" />
             </span>
           </h2>
-          <button className="button mt-5">
+          <button
+            onClick={() => navigate("/payment")}
+            className="button mt-5"
+          >
             Proceed to checkout
           </button>
         </div>

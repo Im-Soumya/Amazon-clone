@@ -1,5 +1,5 @@
 import { StarIcon } from '@heroicons/react/solid';
-import React from 'react';
+import React, { useState } from 'react';
 import Currency from "react-currency-formatter";
 import { useDispatch } from 'react-redux';
 import { addToBasket, removeFromBasket } from '../../redux/basketSlice';

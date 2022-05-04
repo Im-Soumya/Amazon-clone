@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Home from './components/Home/Home';
 import ProductFeed from './components/ProductFeed/ProductFeed';
 import Checkout from "./components/Checkout/Checkout";
+import Payment from "./components/Payment/Payment";
 
 function App() {
   const [products, setProducts] = useState([])
@@ -26,6 +27,7 @@ function App() {
         <Routes>
           <Route path="/" element={<><Navbar /><Home /><ProductFeed products={products} /></>} />
           <Route path="/checkout" element={<><Navbar /><Checkout /></>} />
+          <Route path="/payment" element={<><Navbar /><Payment /></>} />
         </Routes>
       </Router>
     </div>
