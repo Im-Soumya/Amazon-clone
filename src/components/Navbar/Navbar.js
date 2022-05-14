@@ -1,41 +1,47 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MenuIcon, SearchIcon, ShoppingCartIcon } from "@heroicons/react/outline";
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "firebase/auth";
-import { provider } from "../../firebase";
+import { signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "firebase/auth";
+import { auth, provider } from "../../firebase";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectItems } from "../../redux/basketSlice";
 
 const Navbar = () => {
-  // const [userName, setUserName] = useState("")
+  const [user, setUser] = useState(null);
 
   const items = useSelector(selectItems)
 
-  // const auth = getAuth();
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+      } else {
+        setUser(null);
+      }
+    })
 
-  // const handleSignIn = () => {
-  //   signInWithPopup(auth, provider)
-  //     .then(res => {
-  //       const credential = GoogleAuthProvider.credentialFromResult(res);
-  //       const token = credential.accessToken;
-  //       const user = res.user;
-  //       console.log(auth.currentUser.displayName)
-  //       setUserName(auth.currentUser.displayName)
-  //       console.log(auth.currentUser)
-  //     })
-  //     .catch(e => {
-  //       const errorCode = e.code;
-  //       const errorMessage = e.message;
-  //       const email = e.email;
-  //       const credential = GoogleAuthProvider.credentialFromError(e);
-  //       console.log(auth.currentUser)
-  //     })
-  // }
+    return () => {
+      unsub();
+    }
+  }, [])
 
-  // const handleSignOut = () => {
-  //   signOut(auth)
-  //   setUserName("")
-  // }
+  const handleSignIn = async () => {
+    try {
+      await signInWithPopup(auth, provider);
+      setUser(auth.currentUser);
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      setUser(null);
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
 
   return (
     <header className="sticky top-0 z-50">
@@ -61,12 +67,11 @@ const Navbar = () => {
         </div>
 
         <div
-          // onClick={!auth.currentUser ? handleSignIn : handleSignOut}
+          onClick={user === null ? handleSignIn : handleSignOut}
           className="text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap"
         >
           <div className="link">
-            {/* <p>{userName === "" ? "Sign in" : `Hello ${userName}`}</p> */}
-            <p>Hello Dude</p>
+            <p>{user === null ? "Sign in" : `Hello ${user?.displayName}`}</p>
             <p className="font-bold md:text-sm">Account & Lists</p>
           </div>
 
