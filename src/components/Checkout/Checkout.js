@@ -50,7 +50,7 @@ const Checkout = () => {
             </span>
           </h2>
           <button
-            // onClick={() => navigate("/payment")}
+            onClick={() => navigate("/payment")}
             className="button mt-5"
           >
             Proceed to checkout
