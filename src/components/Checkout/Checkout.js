@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import { selectItems, selectTotal } from '../../redux/basketSlice';
 import CheckoutProduct from "../Checkout/CheckoutProduct";
 import Currency from "react-currency-formatter";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
@@ -51,7 +50,7 @@ const Checkout = () => {
             </span>
           </h2>
           <button
-            onClick={() => navigate("/payment")}
+            // onClick={() => navigate("/payment")}
             className="button mt-5"
           >
             Proceed to checkout

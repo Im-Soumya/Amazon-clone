@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { MenuIcon, SearchIcon, ShoppingCartIcon } from "@heroicons/react/outline";
-import { signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "firebase/auth";
+import { signInWithPopup, onAuthStateChanged, signOut } from "firebase/auth";
 import { auth, provider } from "../../firebase";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -9,12 +9,13 @@ import { selectItems } from "../../redux/basketSlice";
 const Navbar = () => {
   const [user, setUser] = useState(null);
 
-  const items = useSelector(selectItems)
+  const items = useSelector(selectItems);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
+        console.log(currentUser.displayName);
       } else {
         setUser(null);
       }
@@ -23,7 +24,7 @@ const Navbar = () => {
     return () => {
       unsub();
     }
-  }, [])
+  }, [user]);
 
   const handleSignIn = async () => {
     try {
@@ -37,6 +38,7 @@ const Navbar = () => {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
+      console.log(auth.currentUser);
       setUser(null);
     } catch (e) {
       console.log(e.message);
@@ -67,11 +69,10 @@ const Navbar = () => {
         </div>
 
         <div
-          onClick={user === null ? handleSignIn : handleSignOut}
           className="text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap"
         >
-          <div className="link">
-            <p>{user === null ? "Sign in" : `Hello ${user?.displayName}`}</p>
+          <div className="link" onClick={user === null ? handleSignIn : handleSignOut}>
+            <p>{user ? `Hello ${user?.displayName}` : "Sign in"}</p>
             <p className="font-bold md:text-sm">Account & Lists</p>
           </div>
 
