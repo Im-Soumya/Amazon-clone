@@ -1,30 +1,13 @@
 import { useState, useEffect } from "react";
 import { MenuIcon, SearchIcon, ShoppingCartIcon } from "@heroicons/react/outline";
-import { signInWithPopup, onAuthStateChanged, signOut } from "firebase/auth";
+import { signInWithPopup, signOut } from "firebase/auth";
 import { auth, provider } from "../../firebase";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectItems } from "../../redux/basketSlice";
 
-const Navbar = () => {
-  const [user, setUser] = useState(null);
-
+const Navbar = ({ user, setUser }) => {
   const items = useSelector(selectItems);
-
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-        console.log(currentUser.displayName);
-      } else {
-        setUser(null);
-      }
-    })
-
-    return () => {
-      unsub();
-    }
-  }, [user]);
 
   const handleSignIn = async () => {
     try {

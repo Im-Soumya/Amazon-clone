@@ -47,12 +47,12 @@ const Product = ({ id, title, price, description, category, image }) => {
 
       <p className='text-xs my-2 line-clamp-2'>{description}</p>
 
-      {/* <div className="mb-5">
+      <div className="mb-5 font-bold">
         <Currency
           quantity={price}
-          currency="RUP"
+          currency="INR"
         />
-      </div> */}
+      </div>
 
       {hasPrime && (
         <div className='flex items-center space-x-2 -mt-5'>
