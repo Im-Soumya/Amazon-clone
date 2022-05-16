@@ -16,13 +16,13 @@ const Orders = ({ user, setUser }) => {
     <>
       {user ?
         (
-          <div className="max-w-screen-lg mx-auto p-10">
+          <div className="max-w-screen-lg  h-screen mx-auto p-10">
             <h1 className="text-3xl border-b mb-2 pb-3 border-yellow-400">
               Your Orders
             </h1>
 
             <div className="mt-5 space-y-5">
-
+              <h3 className="text-xl text-center">This page is coming soon!</h3>
             </div>
           </div>
         ) :

@@ -1,12 +1,20 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectTotal } from '../../redux/basketSlice';
+import { v4 as uuid } from "uuid";
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useNavigate } from "react-router-dom";
 import Currency from "react-currency-formatter";
-import { collection } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from "../../firebase";
+import { clearBasket } from '../../redux/basketSlice';
 
-const Payment = () => {
+const Payment = ({ user }) => {
+
+  const dispatch = useDispatch();
+
+  const unique_id = uuid();
+  const small_uid = unique_id.slice(0, 8);
 
   const total = useSelector(selectTotal);
 
@@ -25,6 +33,7 @@ const Payment = () => {
     setIsLoading(true);
     setTimeout(() => {
       navigate("/success");
+      dispatch(clearBasket());
       setIsLoading(false);
     }, 4000);
   }
@@ -39,8 +48,14 @@ const Payment = () => {
     console.log("card", cardElement);
     console.log("stripe", stripe);
 
-    const usersRef = collection(db, "users");
-    // const userRef = doc(usersRef, )
+    try {
+      const usersRef = collection(db, "users");
+      await addDoc((usersRef, user.email, "orders", small_uid), {
+        timestamp: serverTimestamp(),
+      })
+    } catch (e) {
+      console.log(e.message);
+    }
 
     timeout();
   }
@@ -90,7 +105,11 @@ const Payment = () => {
               />
             </div>
 
-            <button className='button mt-3 w-full text-lg font-semibold' type="submit" disabled={!zip}>
+            <button
+              className='button mt-3 w-full text-lg font-semibold'
+              type="submit"
+              disabled={!zip}
+            >
               {isLoading ?
                 (<p>Processing...</p>) :
                 (<p>Pay <Currency quantity={total} currency="INR" /></p>)

@@ -1,8 +1,9 @@
 import './App.css';
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
+import { auth, db } from "./firebase";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { collection, getDoc } from 'firebase/firestore';
 import Navbar from "./components/Navbar/Navbar";
 import Home from './components/Home/Home';
 import ProductFeed from './components/ProductFeed/ProductFeed';
@@ -30,9 +31,18 @@ function App() {
     }
   }, [user]);
 
-  // useEffect(() => {
+  useEffect(() => {
+    const getOrders = async () => {
+      try {
+        const usersRef = collection(db, "users");
+        await getDoc(usersRef, user.email, "orders")
+      } catch (e) {
+        console.log(e.message);
+      }
+    }
 
-  // }, [])
+    getOrders();
+  }, [user])
 
   useEffect(() => {
     function getProducts() {
@@ -53,7 +63,7 @@ function App() {
         <Routes>
           <Route path="/" element={<><Navbar user={user} setUser={setUser} /><Home /><ProductFeed products={products} /></>} />
           <Route path="/checkout" element={<><Navbar user={user} setUser={setUser} /><Checkout /></>} />
-          <Route path="/payment" element={<><Navbar user={user} setUser={setUser} /><Payment /></>} />
+          <Route path="/payment" element={<><Navbar user={user} setUser={setUser} /><Payment user={user} /></>} />
           <Route path="/success" element={<><Navbar user={user} setUser={setUser} /><Success /></>} />
           <Route path="/orders" element={<><Navbar user={user} setUser={setUser} /><Orders user={user} setUser={setUser} /></>} />
         </Routes>
