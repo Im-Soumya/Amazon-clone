@@ -59,10 +59,12 @@ const Navbar = ({ user, setUser }) => {
             <p className="font-bold md:text-sm">Account & Lists</p>
           </div>
 
-          <div className="link">
-            <p>Returns</p>
-            <p className="font-bold md:text-sm">& Orders</p>
-          </div>
+          <Link to="/orders">
+            <div className="link">
+              <p>Returns</p>
+              <p className="font-bold md:text-sm">& Orders</p>
+            </div>
+          </Link>
 
           <Link to="/checkout">
             <div className="relative link flex items-center">

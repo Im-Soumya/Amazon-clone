@@ -30,6 +30,10 @@ function App() {
     }
   }, [user]);
 
+  // useEffect(() => {
+
+  // }, [])
+
   useEffect(() => {
     function getProducts() {
       fetch("https://fakestoreapi.com/products")
@@ -51,7 +55,7 @@ function App() {
           <Route path="/checkout" element={<><Navbar user={user} setUser={setUser} /><Checkout /></>} />
           <Route path="/payment" element={<><Navbar user={user} setUser={setUser} /><Payment /></>} />
           <Route path="/success" element={<><Navbar user={user} setUser={setUser} /><Success /></>} />
-          <Route path="/orders" element={<><Navbar user={user} setUser={setUser} /><Orders user={user} /></>} />
+          <Route path="/orders" element={<><Navbar user={user} setUser={setUser} /><Orders user={user} setUser={setUser} /></>} />
         </Routes>
       </Router>
     </div>

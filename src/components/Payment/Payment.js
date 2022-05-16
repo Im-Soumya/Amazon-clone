@@ -1,14 +1,20 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectTotal } from '../../redux/basketSlice';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useNavigate } from "react-router-dom";
+import Currency from "react-currency-formatter";
+import { collection } from 'firebase/firestore';
 
 const Payment = () => {
 
+  const total = useSelector(selectTotal);
+
   const [name, setName] = useState('');
   const [state, setState] = useState('');
-  const [city, setCity] = useState('');
   const [zip, setZip] = useState('');
   const [address, setAddress] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -16,8 +22,10 @@ const Payment = () => {
   const stripe = useStripe();
 
   const timeout = () => {
+    setIsLoading(true);
     setTimeout(() => {
       navigate("/success");
+      setIsLoading(false);
     }, 4000);
   }
 
@@ -31,55 +39,65 @@ const Payment = () => {
     console.log("card", cardElement);
     console.log("stripe", stripe);
 
+    const usersRef = collection(db, "users");
+    // const userRef = doc(usersRef, )
+
     timeout();
   }
 
   return (
-    <div className='max-w-screen-lg mx-auto p-10'>
-      <h2 className='text-3xl border-b mb-2 pb-2 border-yellow-400'>
-        Payment
-      </h2>
-      <div className=''>
-        <form onSubmit={handleSubmit}>
-          <div className="flex flex-col">
-            <input
-              type="text"
-              placeholder="Name"
-              className='mb-3 p-2 bg-gray-100 border-b border-gray-300'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <CardElement className='mb-3 p-2 border-b border-gray-300' />
-          </div>
+    <div className='flex flex-col justify-center items-center h-screen'>
+      <div className="max-w-screen-lg bg-white p-10">
+        <h2 className='text-3xl border-b mb-2 pb-3 border-yellow-400'>
+          Payment
+        </h2>
+        <div>
+          <form onSubmit={handleSubmit}>
+            <div className="flex flex-col">
+              <input
+                type="text"
+                placeholder="Name"
+                className='mt-4 mb-5 p-2 border-b border-gray-300 focus:outline-none'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <CardElement className='mb-3 p-2 border-b border-gray-300' />
+            </div>
 
-          <h3 className='text-md mt-3 mb-2 ml-2'>Billing Address</h3>
+            <h3 className='text-md mt-9 mb-2 ml-2'>Billing Address</h3>
 
-          <div className='flex flex-col justify-between mb-5 sm:flex-row'>
-            <input
-              type="text"
-              placeholder="Street address"
-              className='flex-1 mb-3 p-2 bg-gray-100 border-b border-gray-300 sm:mr-6'
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder='State/Province'
-              className='mb-3 p-2 bg-gray-100 border-b border-gray-300 sm:mr-6'
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder='Zip code'
-              className='mb-3 p-2 bg-gray-100 border-b border-gray-300'
-              value={zip}
-              onChange={(e) => setZip(e.target.value)}
-            />
-          </div>
+            <div className='flex flex-col justify-between mt-5 mb-5 md:flex-row'>
+              <input
+                type="text"
+                placeholder="Street address"
+                className='mb-3 p-2 border-b border-gray-300 md:mr-6 flex-1 focus:outline-none'
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder='State/Province' md
+                className='mb-3 p-2 border-b border-gray-300 md:mr-6 focus:outline-none'
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+              />
+              <input
+                type="text"
+                placeholder='Zip code'
+                className='mb-3 p-2 border-b border-gray-300 focus:outline-none'
+                value={zip}
+                onChange={(e) => setZip(e.target.value)}
+              />
+            </div>
 
-          <button className='button w-full' type="submit">Pay</button>
-        </form>
+            <button className='button mt-3 w-full text-lg font-semibold' type="submit" disabled={!zip}>
+              {isLoading ?
+                (<p>Processing...</p>) :
+                (<p>Pay <Currency quantity={total} currency="INR" /></p>)
+              }
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   )
