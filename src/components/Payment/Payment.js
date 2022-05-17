@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectTotal } from '../../redux/basketSlice';
-import { v4 as uuid } from "uuid";
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useNavigate } from "react-router-dom";
 import Currency from "react-currency-formatter";
@@ -10,10 +9,6 @@ import { clearBasket } from '../../redux/basketSlice';
 const Payment = ({ user }) => {
 
   const dispatch = useDispatch();
-
-  const unique_id = uuid();
-  const small_uid = unique_id.slice(0, 8);
-
   const total = useSelector(selectTotal);
 
   const [name, setName] = useState('');

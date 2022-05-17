@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { MenuIcon, SearchIcon, ShoppingCartIcon } from "@heroicons/react/outline";
 import { signInWithPopup, signOut } from "firebase/auth";
 import { auth, provider } from "../../firebase";
