@@ -1,9 +1,8 @@
 import './App.css';
 import { useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth, db } from "./firebase";
+import { auth } from "./firebase";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { collection, getDoc } from 'firebase/firestore';
 import Navbar from "./components/Navbar/Navbar";
 import Home from './components/Home/Home';
 import ProductFeed from './components/ProductFeed/ProductFeed';
@@ -32,19 +31,6 @@ function App() {
   }, [user]);
 
   useEffect(() => {
-    const getOrders = async () => {
-      try {
-        const usersRef = collection(db, "users");
-        await getDoc(usersRef, user.email, "orders")
-      } catch (e) {
-        console.log(e.message);
-      }
-    }
-
-    getOrders();
-  }, [user])
-
-  useEffect(() => {
     function getProducts() {
       fetch("https://fakestoreapi.com/products")
         .then(res => res.json())
@@ -61,7 +47,7 @@ function App() {
     <div className='bg-gray-100'>
       <Router>
         <Routes>
-          <Route path="/" element={<><Navbar user={user} setUser={setUser} /><Home /><ProductFeed products={products} /></>} />
+          <Route path="/" element={<><Navbar user={user} setUser={setUser} /><Home /><ProductFeed user={user} products={products} /></>} />
           <Route path="/checkout" element={<><Navbar user={user} setUser={setUser} /><Checkout /></>} />
           <Route path="/payment" element={<><Navbar user={user} setUser={setUser} /><Payment user={user} /></>} />
           <Route path="/success" element={<><Navbar user={user} setUser={setUser} /><Success /></>} />

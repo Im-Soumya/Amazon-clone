@@ -5,8 +5,6 @@ import { v4 as uuid } from "uuid";
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useNavigate } from "react-router-dom";
 import Currency from "react-currency-formatter";
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from "../../firebase";
 import { clearBasket } from '../../redux/basketSlice';
 
 const Payment = ({ user }) => {
@@ -47,15 +45,6 @@ const Payment = ({ user }) => {
 
     console.log("card", cardElement);
     console.log("stripe", stripe);
-
-    try {
-      const usersRef = collection(db, "users");
-      await addDoc((usersRef, user.email, "orders", small_uid), {
-        timestamp: serverTimestamp(),
-      })
-    } catch (e) {
-      console.log(e.message);
-    }
 
     timeout();
   }

@@ -7,27 +7,31 @@ import { addToBasket } from "../../redux/basketSlice";
 const MAX_RATING = 5;
 const MIN_RATING = 1;
 
-const Product = ({ id, title, price, description, category, image }) => {
+const Product = ({ id, title, price, description, category, image, user }) => {
 
   const [rating, setRating] = useState(
     Math.floor(Math.random() * (MAX_RATING - MIN_RATING + 1)) + MIN_RATING
   );
-  const [hasPrime, setHasPrime] = useState(Math.random() < 0.5)
+  const [hasPrime, setHasPrime] = useState(Math.random() < 0.5);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const addItemToBasket = () => {
-    const product = {
-      id,
-      title,
-      price,
-      description,
-      category,
-      image,
-      hasPrime,
-    }
+    if (user) {
+      const product = {
+        id,
+        title,
+        price,
+        description,
+        category,
+        image,
+        hasPrime,
+      }
 
-    dispatch(addToBasket(product))
+      dispatch(addToBasket(product))
+    } else {
+      alert("Please login to shop items!");
+    }
   }
 
   return (
