@@ -5,5 +5,6 @@ Link to the website: https://react-amazon-clone-pink.vercel.app/
 
 ## Resources used:
  * Redux
- * Tailwind CSS
  * Firebase
+ * Stripe
+ * Tailwind CSS
