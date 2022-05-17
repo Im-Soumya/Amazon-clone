@@ -27,7 +27,7 @@ const Orders = ({ user, setUser }) => {
           </div>
         ) :
         (
-          <div className="max-w-screen-lg mx-auto p-10">
+          <div className="max-w-screen-lg h-screen mx-auto p-10">
             <h2 className="flex text-3xl border-b mb-2 pb-3 border-yellow-400">
               You must <p className="mx-3 text-gray-500 hover:underline cursor-pointer" onClick={handleSignIn}>login</p> to check orders
             </h2>

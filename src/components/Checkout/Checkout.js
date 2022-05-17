@@ -13,7 +13,7 @@ const Checkout = () => {
   const total = useSelector(selectTotal);
 
   return (
-    <main className='lg:flex max-w-screen-2xl mx-auto'>
+    <main className='lg:flex max-w-screen-2xl h-screen mx-auto'>
       <div className='flex-grow m-5 shadow-sm'>
         <img
           src="https://www.junglescout.com/wp-content/uploads/2020/05/Prime-day-banner.png"
